@@ -69,7 +69,20 @@ router.get("/celebrities/:celebId", (req, res, next) => {
 router.post("/celebrities/:celebId/delete", (req, res, next) => {
     CelebrityModel.findByIdAndRemove(req.params.celebId)
       .then((celebrityFromDb) => {
-          
+
+          res.redirect("/celebrities");
+
+      })
+      .catch((err) => {
+          next(err);
+      });
+});
+
+router.get("/celebrities/:celebId/edit", (req, res, next) => {
+    CelebrityModel.findById(req.params.celebId)
+      .then((celebrityFromDb) => {
+
+        res.locals.celebEdit = celebrityFromDb;
           res.redirect("/celebrities");
 
       })
